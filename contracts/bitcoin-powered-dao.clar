@@ -63,3 +63,28 @@
     status: (string-ascii 10)
   }
 )
+
+;; public functions
+
+;; Membership management
+(define-public (join-dao)
+  (let (
+    (caller tx-sender)
+  )
+    (asserts! (not (is-member caller)) ERR-ALREADY-MEMBER)
+    (map-set members caller {reputation: u1, stake: u0, last-interaction: block-height})
+    (var-set total-members (+ (var-get total-members) u1))
+    (ok true)
+  )
+)
+
+(define-public (leave-dao)
+  (let (
+    (caller tx-sender)
+  )
+    (asserts! (is-member caller) ERR-NOT-MEMBER)
+    (map-delete members caller)
+    (var-set total-members (- (var-get total-members) u1))
+    (ok true)
+  )
+)
