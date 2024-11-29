@@ -229,3 +229,21 @@
     )
   )
 )
+
+;; Treasury management
+(define-public (donate-to-treasury (amount uint))
+  (let (
+    (caller tx-sender)
+  )
+    (asserts! (> amount u0) ERR-INVALID-AMOUNT)
+    (try! (stx-transfer? amount caller (as-contract tx-sender)))
+    (var-set treasury-balance (+ (var-get treasury-balance) amount))
+    (if (is-member caller)
+      (begin
+        (try! (update-member-reputation caller 2)) ;; Increase reputation for donating
+        (ok true)
+      )
+      (ok true)
+    )
+  )
+)
