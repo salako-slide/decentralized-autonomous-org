@@ -30,3 +30,36 @@
 (define-data-var total-members uint u0)
 (define-data-var total-proposals uint u0)
 (define-data-var treasury-balance uint u0)
+
+;; data maps
+(define-map members principal 
+  {
+    reputation: uint,
+    stake: uint,
+    last-interaction: uint
+  }
+)
+
+(define-map proposals uint 
+  {
+    creator: principal,
+    title: (string-ascii 50),
+    description: (string-utf8 500),
+    amount: uint,
+    yes-votes: uint,
+    no-votes: uint,
+    status: (string-ascii 10),
+    created-at: uint,
+    expires-at: uint
+  }
+)
+
+(define-map votes {proposal-id: uint, voter: principal} bool)
+
+(define-map collaborations uint 
+  {
+    partner-dao: principal,
+    proposal-id: uint,
+    status: (string-ascii 10)
+  }
+)
