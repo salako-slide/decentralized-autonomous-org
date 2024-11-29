@@ -316,3 +316,21 @@
 (define-read-only (get-total-proposals)
   (ok (var-get total-proposals))
 )
+
+;; private functions
+(define-private (is-member (user principal))
+  (match (map-get? members user)
+    member-data true
+    false
+  )
+)
+
+(define-private (is-active-proposal (proposal-id uint))
+  (match (map-get? proposals proposal-id)
+    proposal (and 
+      (< block-height (get expires-at proposal))
+      (is-eq (get status proposal) "active")
+    )
+    false
+  )
+)
