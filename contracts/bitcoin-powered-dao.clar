@@ -288,3 +288,15 @@
     )
   )
 )
+
+;; read only functions
+(define-read-only (get-treasury-balance)
+  (ok (var-get treasury-balance))
+)
+
+(define-read-only (get-member-reputation (user principal))
+  (match (map-get? members user)
+    member-data (ok (get reputation member-data))
+    ERR-NOT-MEMBER
+  )
+)
