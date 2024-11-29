@@ -1,5 +1,4 @@
 ;; title: Bitcoin-Powered DAO
-;; version: 1.0.0
 ;; summary: A decentralized autonomous organization (DAO) powered by Bitcoin, enabling members to stake tokens, create and vote on proposals, and manage a treasury.
 ;; description: 
 ;; This smart contract implements a Bitcoin-powered DAO where members can join, leave, stake tokens, and participate in governance by creating and voting on proposals. The contract manages a treasury and supports cross-DAO collaborations. Key features include:
