@@ -372,3 +372,23 @@
     ERR-NOT-MEMBER
   )
 )
+
+(define-public (decay-inactive-members)
+  (let (
+    (caller tx-sender)
+    (current-block block-height)
+  )
+    (asserts! (is-eq caller CONTRACT-OWNER) ERR-NOT-AUTHORIZED)
+    (map-set members caller
+      (match (map-get? members caller)
+        member-data 
+        (if (> (- current-block (get last-interaction member-data)) u4320) ;; Approx. 30 days of inactivity
+          (merge member-data {reputation: (/ (get reputation member-data) u2)}) ;; Halve the reputation
+          member-data
+        )
+        { reputation: u0, stake: u0, last-interaction: current-block }
+      )
+    )
+    (ok true)
+  )
+)
