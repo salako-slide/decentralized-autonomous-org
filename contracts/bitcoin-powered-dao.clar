@@ -300,3 +300,19 @@
     ERR-NOT-MEMBER
   )
 )
+
+(define-read-only (get-proposal (proposal-id uint))
+  (ok (unwrap! (map-get? proposals proposal-id) ERR-INVALID-PROPOSAL))
+)
+
+(define-read-only (get-member (user principal))
+  (ok (unwrap! (map-get? members user) ERR-NOT-MEMBER))
+)
+
+(define-read-only (get-total-members)
+  (ok (var-get total-members))
+)
+
+(define-read-only (get-total-proposals)
+  (ok (var-get total-proposals))
+)
